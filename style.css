@@ -501,3 +501,149 @@ body {
   .sidebar { width: 200px; }
   .stats-grid, .feature-cards { grid-template-columns: 1fr; }
 }
+
+
+
+
+
+
+
+
+
+
+/*  =========================================
+            Search Room Page Styles
+    ========================================= */
+
+
+.search-box {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-end;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 160px;
+}
+
+.search-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 7px;
+}
+
+.search-field select,
+.search-field input {
+  padding: 11px 13px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  color: #334155;
+  transition: border 0.2s;
+}
+
+.search-field select:focus,
+.search-field input:focus {
+  border-color: #3b82f6;
+}
+
+.search-btn {
+  padding: 12px 28px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.search-btn:hover {
+  background: #2563eb;
+}
+
+/* ===== RESULTS ===== */
+.results-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.room-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border-left: 5px solid transparent;
+}
+
+.room-card.free {
+  border-left-color: #22c55e;
+}
+
+.room-card.booked {
+  border-left-color: #ef4444;
+}
+
+.room-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.room-card-top h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.free-badge {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.booked-badge {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.room-info {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .room-grid { grid-template-columns: 1fr; }
+  .search-box { flex-direction: column; align-items: stretch; }
+}
