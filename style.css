@@ -757,3 +757,83 @@ body {
 .routine-table tr:hover td {
   background: #f8fafc;
 }
+
+
+
+
+
+
+
+
+
+
+/*  =========================================
+            My Bookings Page Styles
+    ========================================= */
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking-card {
+  background: white;
+  border-radius: 14px;
+  padding: 22px 26px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.booking-info h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 17.5px;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.booking-meta {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.booking-purpose {
+  font-size: 14px;
+  color: #334155;
+  font-weight: 500;
+}
+
+.booking-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cancel-btn {
+  padding: 9px 18px;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #fecaca;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .booking-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
