@@ -5,6 +5,53 @@
   font-family: 'Inter', sans-serif;
 }
 
+
+/* Global Font Size Increase */
+
+/* body {
+  font-size: 16px;
+}
+
+.sidebar-header h3 { font-size: 18px !important; }
+.sidebar-header p { font-size: 14px !important; }
+.menu-item { font-size: 16px !important; }
+
+.topbar h1 { font-size: 27px !important; }
+.topbar-subtitle { font-size: 15px !important; }
+
+.stat-card h2 { font-size: 26px !important; }
+.stat-card p { font-size: 15.5px !important; }
+
+.feature-card h3 { font-size: 17.5px !important; }
+.feature-card p { font-size: 15px !important; }
+
+.search-field label { font-size: 14.5px !important; }
+.search-field select, .search-field input { font-size: 15.5px !important; }
+.search-btn { font-size: 16px !important; }
+
+.results-title { font-size: 19px !important; }
+.room-card-top h4 { font-size: 17.5px !important; }
+.status-badge { font-size: 13px !important; }
+.room-info { font-size: 14.5px !important; }
+
+.routine-table th { font-size: 14px !important; }
+.routine-table td { font-size: 15.5px !important; }
+
+.login-box h2 { font-size: 28px !important; }
+.form-subtitle { font-size: 15.5px !important; }
+.input-group label { font-size: 14px !important; }
+.input-group input { font-size: 15.5px !important; }
+.login-btn { font-size: 16.5px !important; }
+
+.brand-content h1 { font-size: 37px !important; }
+.brand-content p { font-size: 16.5px !important; }
+.feature-item { font-size: 15.5px !important; } */
+
+
+
+
+
+
 body {
   min-height: 100vh;
   overflow: hidden;
@@ -76,14 +123,14 @@ body {
 
 .brand-content h1 {
   font-family: 'Poppins', sans-serif;
-  font-size: 34px;
+  font-size: 38px;
   font-weight: 700;
   line-height: 1.25;
   margin-bottom: 16px;
 }
 
 .brand-content p {
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: 36px;
@@ -99,7 +146,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 14px;
+  font-size: 15.5px;
   color: rgba(255, 255, 255, 0.95);
 }
 
@@ -132,14 +179,14 @@ body {
 
 .login-box h2 {
   font-family: 'Poppins', sans-serif;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 600;
   color: #0f172a;
   margin-bottom: 6px;
 }
 
 .form-subtitle {
-  font-size: 14px;
+  font-size: 15.5px;
   color: #64748b;
   margin-bottom: 32px;
 }
@@ -151,7 +198,7 @@ body {
 }
 
 .input-group label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #334155;
   margin-bottom: 7px;
@@ -161,7 +208,7 @@ body {
   padding: 12px 14px;
   border: 1.5px solid #e2e8f0;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 15.5px;
   outline: none;
   transition: all 0.2s;
   background: white;
@@ -209,7 +256,7 @@ body {
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 16.5px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
@@ -302,12 +349,12 @@ body {
 
 .sidebar-header h3 {
   font-family: 'Poppins', sans-serif;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
 }
 
 .sidebar-header p {
-  font-size: 13px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -326,7 +373,7 @@ body {
   border-radius: 10px;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 500;
   transition: all 0.2s;
 }
@@ -374,13 +421,13 @@ body {
 
 .topbar h1 {
   font-family: 'Poppins', sans-serif;
-  font-size: 25px;
+  font-size: 27px;
   color: #0f172a;
   margin-bottom: 4px;
 }
 
 .topbar-subtitle {
-  font-size: 13.5px;
+  font-size: 15px;
   color: #64748b;
 }
 
@@ -448,12 +495,12 @@ body {
 
 .stat-card h2 {
   font-family: 'Poppins', sans-serif;
-  font-size: 24px;
+  font-size: 26px;
   color: #0f172a;
 }
 
 .stat-card p {
-  font-size: 14.5px;
+  font-size: 15.5px;
   color: #64748b;
 }
 
@@ -485,13 +532,13 @@ body {
 
 .feature-card h3 {
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 17.5px;
   color: #0f172a;
   margin-bottom: 6px;
 }
 
 .feature-card p {
-  font-size: 14.5px;
+  font-size: 15px;
   color: #64748b;
   line-height: 1.5;
 }
@@ -536,7 +583,7 @@ body {
 }
 
 .search-field label {
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 600;
   color: #334155;
   margin-bottom: 7px;
@@ -547,7 +594,7 @@ body {
   padding: 11px 13px;
   border: 1.5px solid #e2e8f0;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 15.5px;
   outline: none;
   font-family: 'Inter', sans-serif;
   color: #334155;
@@ -565,7 +612,7 @@ body {
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
@@ -579,7 +626,7 @@ body {
 /* ===== RESULTS ===== */
 .results-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 17px;
+  font-size: 19px;
   color: #0f172a;
   margin-bottom: 16px;
 }
@@ -615,7 +662,7 @@ body {
 
 .room-card-top h4 {
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 17.5px;
   color: #0f172a;
 }
 
@@ -637,7 +684,7 @@ body {
 }
 
 .room-info {
-  font-size: 13px;
+  font-size: 14.5px;
   color: #64748b;
   line-height: 1.5;
 }
@@ -646,4 +693,67 @@ body {
 @media (max-width: 900px) {
   .room-grid { grid-template-columns: 1fr; }
   .search-box { flex-direction: column; align-items: stretch; }
+}
+
+
+
+
+
+
+
+
+
+
+/*  =========================================
+            Full Routine Page Styles
+    ========================================= */
+
+.filter-box {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.filter-box .search-field {
+  max-width: 220px;
+}
+
+.table-wrapper {
+  background: white;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  overflow-x: auto;
+}
+
+.routine-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.routine-table th {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 2px solid #f1f5f9;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.routine-table td {
+  padding: 14px 18px;
+  font-size: 15.5px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.routine-table tr:last-child td {
+  border-bottom: none;
+}
+
+.routine-table tr:hover td {
+  background: #f8fafc;
 }
