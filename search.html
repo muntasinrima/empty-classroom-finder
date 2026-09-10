@@ -22,6 +22,7 @@
           <h3>Classroom Finder</h3>
           <p>Dept. of CSE</p>
         </div>
+        <button class="hamburger-btn" onclick="document.querySelector('.sidebar').classList.toggle('menu-open')">☰</button>
       </div>
 
       <nav class="sidebar-menu">
@@ -56,9 +57,12 @@
           <h1>Search Room</h1>
           <p class="topbar-subtitle">Check if a room is free at a specific time</p>
         </div>
-        <div class="user-badge">
-          <div class="user-avatar">R</div>
-          <span>Student</span>
+        <div class="topbar-actions">
+          <button class="notification-btn">🔔</button>
+          <div class="user-badge">
+            <div class="user-avatar">R</div>
+            <span>Student</span>
+          </div>
         </div>
       </header>
 
@@ -75,7 +79,6 @@
             <option value="201">Room 201</option>
             <option value="202">Room 202</option>
             <option value="203">Room 203</option>
-            
           </select>
         </div>
 
@@ -100,67 +103,78 @@
         <button class="search-btn" id="searchBtn">🔍 Search</button>
       </section>
 
-      <!-- Results -->
-      <section class="results-section">
+      <!-- Results Summary + Filter Chips -->
+      <div class="results-header">
         <h3 class="results-title">Room Status</h3>
+        <div class="filter-chips">
+          <button class="filter-chip active">All</button>
+          <button class="filter-chip">Free Only</button>
+          <button class="filter-chip">Booked Only</button>
+        </div>
+      </div>
 
-        <div class="room-grid" id="resultsGrid">
-            <!-- Dummy Room Cards (will be replaced with real Firebase data on Day 4) -->
+      <!-- Results -->
+      <section class="room-grid" id="resultsGrid">
+        <!-- Dummy Room Cards (will be replaced with real Firebase data on Day 4) -->
+
+        <div class="room-card free">
+          <div class="room-card-top">
+            <h4>Room 101</h4>
+            <span class="status-badge free-badge">● Free</span>
+          </div>
+          <p class="room-info">No class scheduled at this time</p>
+          <button class="room-card-action">Book This Room</button>
+        </div>
 
         <div class="room-card booked">
-            <div class="room-card-top">
-                <h4>Room 101</h4>
-                <span class="status-badge free-badge">Free</span>
-            </div>
-            <p class="room-info">No class scheduled at this time</p>
+          <div class="room-card-top">
+            <h4>Room 102</h4>
+            <span class="status-badge booked-badge">● Booked</span>
+          </div>
+          <p class="room-info">Data Structures — Mr. Rahman (10:00 - 11:20)</p>
         </div>
-        
-        <div class="room-card booked">
-            <div class="room-card-top">
-                <h4>Room 102</h4>
-                <span class="status-badge booked-badge">Booked</span>
-            </div>
-            <p class="room-info">Data Structures — Mr. Rahman (10:00 - 11:20)</p>
-        </div>
-        
+
         <div class="room-card free">
-            <div class="room-card-top">
-                <h4>Room 103</h4>
-                <span class="status-badge free-badge">Free</span>
-            </div>
-            <p class="room-info">No class scheduled at this time</p>
+          <div class="room-card-top">
+            <h4>Room 103</h4>
+            <span class="status-badge free-badge">● Free</span>
+          </div>
+          <p class="room-info">No class scheduled at this time</p>
+          <button class="room-card-action">Book This Room</button>
         </div>
-        
+
         <div class="room-card booked">
-            <div class="room-card-top">
-                <h4>Room 104</h4>
-                <span class="status-badge booked-badge">Booked</span>
-            </div>
-            <p class="room-info">Digital Logic Design — Ms. Akter (11:30 - 12:50)</p>
+          <div class="room-card-top">
+            <h4>Room 104</h4>
+            <span class="status-badge booked-badge">● Booked</span>
+          </div>
+          <p class="room-info">Digital Logic Design — Ms. Akter (11:30 - 12:50)</p>
         </div>
-        
+
         <div class="room-card free">
-            <div class="room-card-top">
-                <h4>Room 201</h4>
-                <span class="status-badge free-badge">Free</span>
-            </div>
-            <p class="room-info">No class scheduled at this time</p>
+          <div class="room-card-top">
+            <h4>Room 201</h4>
+            <span class="status-badge free-badge">● Free</span>
+          </div>
+          <p class="room-info">No class scheduled at this time</p>
+          <button class="room-card-action">Book This Room</button>
         </div>
-        
+
         <div class="room-card booked">
-            <div class="room-card-top">
-                <h4>Room 202</h4>
-                <span class="status-badge booked-badge">Booked</span>
-            </div>
-            <p class="room-info">Computer Networks — Mr. Islam (2:00 - 3:20)</p>
+          <div class="room-card-top">
+            <h4>Room 202</h4>
+            <span class="status-badge booked-badge">● Booked</span>
+          </div>
+          <p class="room-info">Computer Networks — Mr. Islam (2:00 - 3:20)</p>
         </div>
-        
+
         <div class="room-card free">
-            <div class="room-card-top">
-                <h4>Room 203</h4>
-                <span class="status-badge free-badge">Free</span>
-            </div>
-            <p class="room-info">No class scheduled at this time</p>
+          <div class="room-card-top">
+            <h4>Room 203</h4>
+            <span class="status-badge free-badge">● Free</span>
+          </div>
+          <p class="room-info">No class scheduled at this time</p>
+          <button class="room-card-action">Book This Room</button>
         </div>
 
       </section>

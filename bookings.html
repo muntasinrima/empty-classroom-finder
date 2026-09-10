@@ -22,6 +22,7 @@
           <h3>Classroom Finder</h3>
           <p>Dept. of CSE</p>
         </div>
+        <button class="hamburger-btn" onclick="document.querySelector('.sidebar').classList.toggle('menu-open')">☰</button>
       </div>
 
       <nav class="sidebar-menu">
@@ -56,16 +57,27 @@
           <h1>My Bookings</h1>
           <p class="topbar-subtitle">Manage your room bookings</p>
         </div>
-        <div class="user-badge">
-          <div class="user-avatar">R</div>
-          <span>Student</span>
+        <div class="topbar-actions">
+          <button class="notification-btn">🔔</button>
+          <div class="user-badge">
+            <div class="user-avatar">R</div>
+            <span>Student</span>
+          </div>
         </div>
       </header>
+
+      <!-- Tabs -->
+      <div class="day-tabs">
+        <button class="day-tab active">Upcoming</button>
+        <button class="day-tab">Past</button>
+        <button class="day-tab">Cancelled</button>
+      </div>
 
       <!-- Bookings List -->
       <section class="bookings-list">
 
         <div class="booking-card">
+          <div class="booking-icon">📌</div>
           <div class="booking-info">
             <h4>Room 102</h4>
             <p class="booking-meta">📅 Monday, Sep 14 &nbsp;•&nbsp; ⏰ 2:00 PM - 3:20 PM</p>
@@ -78,6 +90,7 @@
         </div>
 
         <div class="booking-card">
+          <div class="booking-icon">📌</div>
           <div class="booking-info">
             <h4>Room 201</h4>
             <p class="booking-meta">📅 Wednesday, Sep 16 &nbsp;•&nbsp; ⏰ 11:00 AM - 12:20 PM</p>
@@ -89,7 +102,8 @@
           </div>
         </div>
 
-        <div class="booking-card">
+        <div class="booking-card past">
+          <div class="booking-icon">✔️</div>
           <div class="booking-info">
             <h4>Room 103</h4>
             <p class="booking-meta">📅 Thursday, Sep 10 &nbsp;•&nbsp; ⏰ 9:00 AM - 10:20 AM</p>

@@ -22,6 +22,7 @@
           <h3>Classroom Finder</h3>
           <p>Dept. of CSE</p>
         </div>
+        <button class="hamburger-btn" onclick="document.querySelector('.sidebar').classList.toggle('menu-open')">☰</button>
       </div>
 
       <nav class="sidebar-menu">
@@ -56,11 +57,25 @@
           <h1>Full Routine</h1>
           <p class="topbar-subtitle">Complete department class schedule</p>
         </div>
-        <div class="user-badge">
-          <div class="user-avatar">R</div>
-          <span>Student</span>
+        <div class="topbar-actions">
+          <button class="notification-btn">🔔</button>
+          <div class="user-badge">
+            <div class="user-avatar">R</div>
+            <span>Student</span>
+          </div>
         </div>
       </header>
+
+      <!-- Day Tabs -->
+      <div class="day-tabs">
+        <button class="day-tab active">All Days</button>
+        <button class="day-tab">Saturday</button>
+        <button class="day-tab">Sunday</button>
+        <button class="day-tab">Monday</button>
+        <button class="day-tab">Tuesday</button>
+        <button class="day-tab">Wednesday</button>
+        <button class="day-tab">Thursday</button>
+      </div>
 
       <!-- Filter -->
       <section class="filter-box">
@@ -75,18 +90,6 @@
             <option value="201">Room 201</option>
             <option value="202">Room 202</option>
             <option value="203">Room 203</option>
-          </select>
-        </div>
-        <div class="search-field">
-          <label>Filter by Day</label>
-          <select id="filterDay">
-            <option value="">All Days</option>
-            <option value="Saturday">Saturday</option>
-            <option value="Sunday">Sunday</option>
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
           </select>
         </div>
       </section>
@@ -105,37 +108,37 @@
           </thead>
           <tbody>
             <tr>
-              <td>Saturday</td>
+              <td><span class="day-pill">Saturday</span></td>
               <td>9:00 - 10:20</td>
-              <td>101</td>
+              <td><strong>101</strong></td>
               <td>Data Structures</td>
               <td>Mr. Rahman</td>
             </tr>
             <tr>
-              <td>Saturday</td>
+              <td><span class="day-pill">Saturday</span></td>
               <td>10:30 - 11:50</td>
-              <td>102</td>
+              <td><strong>102</strong></td>
               <td>Digital Logic Design</td>
               <td>Ms. Akter</td>
             </tr>
             <tr>
-              <td>Sunday</td>
+              <td><span class="day-pill">Sunday</span></td>
               <td>9:00 - 10:20</td>
-              <td>201</td>
+              <td><strong>201</strong></td>
               <td>Computer Networks</td>
               <td>Mr. Islam</td>
             </tr>
             <tr>
-              <td>Sunday</td>
+              <td><span class="day-pill">Sunday</span></td>
               <td>2:00 - 3:20</td>
-              <td>202</td>
+              <td><strong>202</strong></td>
               <td>Database Systems</td>
               <td>Ms. Sultana</td>
             </tr>
             <tr>
-              <td>Monday</td>
+              <td><span class="day-pill">Monday</span></td>
               <td>11:00 - 12:20</td>
-              <td>103</td>
+              <td><strong>103</strong></td>
               <td>Operating Systems</td>
               <td>Mr. Chowdhury</td>
             </tr>

@@ -22,6 +22,7 @@
           <h3>Classroom Finder</h3>
           <p>Dept. of CSE</p>
         </div>
+        <button class="hamburger-btn" onclick="document.querySelector('.sidebar').classList.toggle('menu-open')">☰</button>
       </div>
 
       <nav class="sidebar-menu">
@@ -53,12 +54,16 @@
     <main class="main-content">
       <header class="topbar">
         <div>
+          <span class="date-badge">📅 Thursday, September 10</span>
           <h1>Welcome back, Rima 👋</h1>
-          <p class="topbar-subtitle">Here's what's happening today</p>
+          <p class="topbar-subtitle">Here's what's happening in your department today</p>
         </div>
-        <div class="user-badge">
-          <div class="user-avatar">R</div>
-          <span>Student</span>
+        <div class="topbar-actions">
+          <button class="notification-btn">🔔</button>
+          <div class="user-badge">
+            <div class="user-avatar">R</div>
+            <span>Student</span>
+          </div>
         </div>
       </header>
 
@@ -88,23 +93,38 @@
       </section>
 
       <!-- Feature Cards -->
+      <p class="section-label">QUICK ACTIONS</p>
       <section class="feature-cards">
         <a href="search.html" class="feature-card">
           <div class="feature-card-icon">🔍</div>
           <h3>Search Room</h3>
           <p>Check if a room is free at a specific time</p>
+          <span class="feature-card-arrow">→</span>
         </a>
         <a href="routine.html" class="feature-card">
           <div class="feature-card-icon">📅</div>
           <h3>Full Routine</h3>
           <p>View the complete department class schedule</p>
+          <span class="feature-card-arrow">→</span>
         </a>
         <a href="bookings.html" class="feature-card">
           <div class="feature-card-icon">📋</div>
           <h3>My Bookings</h3>
           <p>See and manage your room bookings</p>
+          <span class="feature-card-arrow">→</span>
         </a>
       </section>
+
+      <!-- Currently Free Rooms Preview -->
+      <p class="section-label">FREE RIGHT NOW</p>
+      <section class="mini-room-list">
+        <div class="mini-room-chip free">Room 101</div>
+        <div class="mini-room-chip free">Room 103</div>
+        <div class="mini-room-chip free">Room 201</div>
+        <div class="mini-room-chip free">Room 203</div>
+        <a href="search.html" class="mini-room-chip see-all">See all →</a>
+      </section>
+
     </main>
 
   </div>
