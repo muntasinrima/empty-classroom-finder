@@ -97,7 +97,90 @@ async function searchRooms() {
 }
 
 // Run search when button is clicked
-document.getElementById("searchBtn").addEventListener("click", searchRooms);
+const searchBtn = document.getElementById("searchBtn");
+if (searchBtn) {
+  searchBtn.addEventListener("click", searchRooms);
+  searchRooms(); // run once on page load too
+}
 
-// Also run search once when page loads (shows all rooms as free by default)
-searchRooms();
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// Full Routine Page Logic (Day 5)
+// ============================================
+
+let selectedDayFilter = "";
+
+async function loadRoutineTable() {
+  const routineBody = document.getElementById("routineBody");
+  if (!routineBody) return; // Only run this on routine.html
+
+  routineBody.innerHTML = "<tr><td colspan='5'>Loading...</td></tr>";
+
+  const allRoutine = await getAllRoutine();
+  const selectedRoom = document.getElementById("filterRoom").value;
+
+  // Apply filters
+  let filteredRoutine = allRoutine;
+
+  if (selectedDayFilter) {
+    filteredRoutine = filteredRoutine.filter((entry) => entry.day === selectedDayFilter);
+  }
+
+  if (selectedRoom) {
+    filteredRoutine = filteredRoutine.filter((entry) => entry.room_number === selectedRoom);
+  }
+
+  routineBody.innerHTML = "";
+
+  if (filteredRoutine.length === 0) {
+    routineBody.innerHTML = "<tr><td colspan='5'>No classes found.</td></tr>";
+    return;
+  }
+
+  filteredRoutine.forEach((entry) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td><span class="day-pill">${entry.day}</span></td>
+      <td>${entry.start_time} - ${entry.end_time}</td>
+      <td><strong>${entry.room_number}</strong></td>
+      <td>${entry.subject}</td>
+      <td>${entry.teacher}</td>
+    `;
+    routineBody.appendChild(row);
+  });
+}
+
+// Day Tab click handling
+const dayTabsContainer = document.getElementById("dayTabs");
+if (dayTabsContainer) {
+  const dayTabs = dayTabsContainer.querySelectorAll(".day-tab");
+
+  dayTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      dayTabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      selectedDayFilter = tab.dataset.day;
+      loadRoutineTable();
+    });
+  });
+}
+
+// Room filter change handling
+const filterRoomSelect = document.getElementById("filterRoom");
+if (filterRoomSelect) {
+  filterRoomSelect.addEventListener("change", loadRoutineTable);
+}
+
+// Load routine table on page load (only runs if routineBody exists)
+loadRoutineTable();
