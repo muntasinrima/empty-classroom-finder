@@ -184,3 +184,125 @@ if (filterRoomSelect) {
 
 // Load routine table on page load (only runs if routineBody exists)
 loadRoutineTable();
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// Booking Feature 
+// ============================================
+
+import { doc, addDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { auth } from "./firebase-config.js";
+
+let currentBookingRoom = null;
+
+const bookingModal = document.getElementById("bookingModal");
+
+if (bookingModal) {
+
+  // Open modal when any "Book This Room" button is clicked
+  // (using event delegation since these buttons are created dynamically)
+  document.getElementById("resultsGrid").addEventListener("click", (e) => {
+    if (e.target.classList.contains("room-card-action")) {
+      const card = e.target.closest(".room-card");
+      const roomNumber = card.querySelector("h4").textContent.replace("Room ", "");
+      currentBookingRoom = roomNumber;
+
+      document.getElementById("modalRoomNumber").textContent = roomNumber;
+      document.getElementById("modalError").style.display = "none";
+      document.getElementById("bookingPurpose").value = "Extra Class";
+      document.getElementById("bookingDate").value = "";
+      document.getElementById("bookingStartTime").value = "";
+      document.getElementById("bookingEndTime").value = "";
+
+      bookingModal.style.display = "flex";
+    }
+  });
+
+  // Close modal
+  document.getElementById("modalCloseBtn").addEventListener("click", () => {
+    bookingModal.style.display = "none";
+  });
+
+  // Close modal if clicking outside the box
+  bookingModal.addEventListener("click", (e) => {
+    if (e.target === bookingModal) {
+      bookingModal.style.display = "none";
+    }
+  });
+
+  // Confirm Booking
+  document.getElementById("confirmBookingBtn").addEventListener("click", async () => {
+    const purpose = document.getElementById("bookingPurpose").value;
+    const date = document.getElementById("bookingDate").value;
+    const startTime = document.getElementById("bookingStartTime").value;
+    const endTime = document.getElementById("bookingEndTime").value;
+    const errorMsg = document.getElementById("modalError");
+
+    // Basic validation
+    if (!date || !startTime || !endTime) {
+      errorMsg.textContent = "Please fill in date, start time and end time.";
+      errorMsg.style.display = "block";
+      return;
+    }
+
+    if (timeToMinutes(startTime) >= timeToMinutes(endTime)) {
+      errorMsg.textContent = "End time must be after start time.";
+      errorMsg.style.display = "block";
+      return;
+    }
+
+    // Check for conflicts with existing bookings on same room+date
+    const bookingsRef = collection(db, "bookings");
+    const q = query(bookingsRef, where("room_number", "==", currentBookingRoom), where("date", "==", date));
+    const snapshot = await getDocs(q);
+
+    const newStart = timeToMinutes(startTime);
+    const newEnd = timeToMinutes(endTime);
+
+    let hasConflict = false;
+    snapshot.forEach((docSnap) => {
+      const existing = docSnap.data();
+      const existingStart = timeToMinutes(existing.start_time);
+      const existingEnd = timeToMinutes(existing.end_time);
+
+      // Overlap check
+      if (newStart < existingEnd && existingStart < newEnd) {
+        hasConflict = true;
+      }
+    });
+
+    if (hasConflict) {
+      errorMsg.textContent = "This room is already booked for an overlapping time on this date.";
+      errorMsg.style.display = "block";
+      return;
+    }
+
+    // No conflict - save booking
+    const user = auth.currentUser;
+
+    await addDoc(bookingsRef, {
+      room_number: currentBookingRoom,
+      date: date,
+      start_time: startTime,
+      end_time: endTime,
+      purpose: purpose,
+      booked_by: user ? user.email : "unknown",
+      status: "confirmed"
+    });
+
+    bookingModal.style.display = "none";
+    alert("✅ Room booked successfully!");
+    searchRooms(); // refresh results
+  });
+}
