@@ -71,21 +71,21 @@
         <div class="stat-card">
           <div class="stat-icon blue">📅</div>
           <div>
-            <h2>34</h2>
+            <h2 id="statRoutineCount">–</h2>
             <p>Routine Entries</p>
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-icon green">🏫</div>
           <div>
-            <h2>7</h2>
+            <h2 id="statRoomCount">–</h2>
             <p>Total Rooms</p>
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-icon red">📋</div>
           <div>
-            <h2>15</h2>
+            <h2 id="statBookingCount">–</h2>
             <p>Active Bookings</p>
           </div>
         </div>
@@ -105,30 +105,40 @@
           <div class="admin-form-grid">
             <div class="search-field">
               <label>Room</label>
-              <select><option>Room 101</option><option>Room 102</option></select>
+              <select id="newRoutineRoom">
+                <!-- Options loaded dynamically from rooms collection -->
+              </select>
             </div>
             <div class="search-field">
               <label>Day</label>
-              <select><option>Saturday</option><option>Sunday</option></select>
+              <select id="newRoutineDay">
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+              </select>
             </div>
             <div class="search-field">
               <label>Start Time</label>
-              <input type="time">
+              <input type="time" id="newRoutineStart">
             </div>
             <div class="search-field">
               <label>End Time</label>
-              <input type="time">
+              <input type="time" id="newRoutineEnd">
             </div>
             <div class="search-field">
               <label>Subject</label>
-              <input type="text" placeholder="e.g. Data Structures">
+              <input type="text" id="newRoutineSubject" placeholder="e.g. Data Structures">
             </div>
             <div class="search-field">
               <label>Teacher</label>
-              <input type="text" placeholder="e.g. Mr. Rahman">
+              <input type="text" id="newRoutineTeacher" placeholder="e.g. Mr. Rahman">
             </div>
           </div>
-          <button class="search-btn">+ Add Routine</button>
+          <p id="routineFormError" class="modal-error" style="display:none;"></p>
+          <button class="search-btn" id="addRoutineBtn">+ Add Routine</button>
         </div>
 
         <div class="table-wrapper">
@@ -136,15 +146,8 @@
             <thead>
               <tr><th>Day</th><th>Time</th><th>Room</th><th>Subject</th><th>Teacher</th><th>Action</th></tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><span class="day-pill">Saturday</span></td><td>9:00 - 10:20</td><td><strong>101</strong></td><td>Data Structures</td><td>Mr. Rahman</td>
-                <td><button class="cancel-btn">Delete</button></td>
-              </tr>
-              <tr>
-                <td><span class="day-pill">Sunday</span></td><td>2:00 - 3:20</td><td><strong>202</strong></td><td>Database Systems</td><td>Ms. Sultana</td>
-                <td><button class="cancel-btn">Delete</button></td>
-              </tr>
+            <tbody id="adminRoutineBody">
+              <!-- Rows loaded by JavaScript -->
             </tbody>
           </table>
         </div>
@@ -157,53 +160,30 @@
           <div class="admin-form-grid">
             <div class="search-field">
               <label>Room Number</label>
-              <input type="text" placeholder="e.g. 105">
+              <input type="text" id="newRoomNumber" placeholder="e.g. 301">
             </div>
             <div class="search-field">
               <label>Floor</label>
-              <input type="text" placeholder="e.g. 1st Floor">
+              <input type="text" id="newRoomFloor" placeholder="e.g. 3rd Floor">
             </div>
             <div class="search-field">
               <label>Building</label>
-              <input type="text" placeholder="e.g. CSE Building">
+              <input type="text" id="newRoomBuilding" placeholder="e.g. CSE Building">
             </div>
           </div>
-          <button class="search-btn">+ Add Room</button>
+          <p id="roomFormError" class="modal-error" style="display:none;"></p>
+          <button class="search-btn" id="addRoomBtn">+ Add Room</button>
         </div>
 
-        <div class="room-grid">
-          <div class="room-card free">
-            <div class="room-card-top">
-              <h4>Room 101</h4>
-              <button class="cancel-btn">Remove</button>
-            </div>
-            <p class="room-info">📍 1st Floor — CSE Building</p>
-          </div>
-          <div class="room-card free">
-            <div class="room-card-top">
-              <h4>Room 201</h4>
-              <button class="cancel-btn">Remove</button>
-            </div>
-            <p class="room-info">📍 2nd Floor — CSE Building</p>
-          </div>
+        <div class="room-grid" id="adminRoomsGrid">
+          <!-- Room cards loaded by JavaScript -->
         </div>
       </section>
 
       <!-- All Bookings Tab -->
       <section class="tab-content" id="bookings-tab" style="display:none;">
-        <div class="bookings-list">
-          <div class="booking-card">
-            <div class="booking-icon">📌</div>
-            <div class="booking-info">
-              <h4>Room 102 — Booked by Rima</h4>
-              <p class="booking-meta">📅 Monday, Sep 14 &nbsp;•&nbsp; ⏰ 2:00 PM - 3:20 PM</p>
-              <p class="booking-purpose">Purpose: Extra Class</p>
-            </div>
-            <div class="booking-actions">
-              <span class="status-badge free-badge">Confirmed</span>
-              <button class="cancel-btn">Cancel</button>
-            </div>
-          </div>
+        <div class="bookings-list" id="adminBookingsList">
+          <!-- Bookings loaded by JavaScript -->
         </div>
       </section>
 
@@ -225,6 +205,8 @@
       });
     });
   </script>
+
+  <script type="module" src="js/main.js"></script>
 
 </body>
 </html>

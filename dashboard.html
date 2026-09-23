@@ -54,8 +54,8 @@
     <main class="main-content">
       <header class="topbar">
         <div>
-          <span class="date-badge">📅 Thursday, September 10</span>
-          <h1>Welcome back, Rima 👋</h1>
+          <span class="date-badge" id="dateBadge">📅 Loading...</span>
+          <h1 id="welcomeHeading">Welcome back 👋</h1>
           <p class="topbar-subtitle">Here's what's happening in your department today</p>
         </div>
         <div class="topbar-actions">
@@ -72,21 +72,21 @@
         <div class="stat-card">
           <div class="stat-icon green">✅</div>
           <div>
-            <h2>12</h2>
+            <h2 id="statFreeNow">–</h2>
             <p>Rooms Free Now</p>
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-icon red">📌</div>
           <div>
-            <h2>8</h2>
+            <h2 id="statBookedNow">–</h2>
             <p>Rooms Booked Now</p>
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-icon blue">📅</div>
           <div>
-            <h2>3</h2>
+            <h2 id="statMyBookingsToday">–</h2>
             <p>Your Bookings Today</p>
           </div>
         </div>
@@ -117,17 +117,15 @@
 
       <!-- Currently Free Rooms Preview -->
       <p class="section-label">FREE RIGHT NOW</p>
-      <section class="mini-room-list">
-        <div class="mini-room-chip free">Room 101</div>
-        <div class="mini-room-chip free">Room 103</div>
-        <div class="mini-room-chip free">Room 201</div>
-        <div class="mini-room-chip free">Room 203</div>
-        <a href="search.html" class="mini-room-chip see-all">See all →</a>
+      <section class="mini-room-list" id="freeRoomsPreview">
+        <div class="mini-room-chip free">Loading...</div>
       </section>
 
     </main>
 
   </div>
+
+  <script type="module" src="js/main.js"></script>
 
 </body>
 </html>
