@@ -1,6 +1,6 @@
 // Main JS - Search Room Feature (Day 4)
 
-import { db } from "./firebase-config.js";
+import { db, auth } from "./firebase-config.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 // Convert "HH:MM" time string to total minutes (for easy comparison)
@@ -202,7 +202,7 @@ loadRoutineTable();
 // ============================================
 
 import { doc, addDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { auth } from "./firebase-config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
 let currentBookingRoom = null;
 
@@ -306,3 +306,82 @@ if (bookingModal) {
     searchRooms(); // refresh results
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// My Bookings Page (Day 7)
+// ============================================
+
+async function loadMyBookings() {
+  const bookingsList = document.getElementById("bookingsList");
+  if (!bookingsList) return; // only run on bookings.html
+
+  const user = auth.currentUser;
+  if (!user) return;
+
+  bookingsList.innerHTML = "<p>Loading...</p>";
+
+  const bookingsRef = collection(db, "bookings");
+  const q = query(bookingsRef, where("booked_by", "==", user.email));
+  const snapshot = await getDocs(q);
+
+  bookingsList.innerHTML = "";
+
+  if (snapshot.empty) {
+    bookingsList.innerHTML = "<p>You have no bookings yet.</p>";
+    return;
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+
+  snapshot.forEach((docSnap) => {
+    const booking = docSnap.data();
+    const bookingId = docSnap.id;
+    const isPast = booking.date < today;
+
+    const card = document.createElement("div");
+    card.className = `booking-card ${isPast ? "past" : ""}`;
+
+    card.innerHTML = `
+      <div class="booking-icon">${isPast ? "✔️" : "📌"}</div>
+      <div class="booking-info">
+        <h4>Room ${booking.room_number}</h4>
+        <p class="booking-meta">📅 ${booking.date} &nbsp;•&nbsp; ⏰ ${booking.start_time} - ${booking.end_time}</p>
+        <p class="booking-purpose">Purpose: ${booking.purpose}</p>
+      </div>
+      <div class="booking-actions">
+        <span class="status-badge ${isPast ? 'booked-badge' : 'free-badge'}">${isPast ? 'Past' : 'Confirmed'}</span>
+        ${!isPast ? `<button class="cancel-btn" data-id="${bookingId}">Cancel</button>` : ""}
+      </div>
+    `;
+
+    bookingsList.appendChild(card);
+  });
+
+  // Cancel button handling
+  bookingsList.querySelectorAll(".cancel-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (confirm("Are you sure you want to cancel this booking?")) {
+        await deleteDoc(doc(db, "bookings", btn.dataset.id));
+        loadMyBookings(); // refresh list
+      }
+    });
+  });
+}
+
+// Run when auth state is ready (so we know the current user)
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loadMyBookings();
+  }
+});
