@@ -3,6 +3,35 @@
 import { db, auth } from "./firebase-config.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
+
+
+// ============================================
+// Toast Notification Function (Day 9)
+// ============================================
+
+function showToast(message, type = "success") {
+  const container = document.getElementById("toastContainer");
+  if (!container) {
+    alert(message); // fallback if container missing
+    return;
+  }
+
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${type === "success" ? "✅" : "⚠️"}</span> ${message}`;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("hide");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+
+
+
+
 // Convert "HH:MM" time string to total minutes (for easy comparison)
 function timeToMinutes(timeStr) {
   const [hours, minutes] = timeStr.split(":").map(Number);
@@ -306,7 +335,7 @@ if (bookingModal) {
     });
 
     bookingModal.style.display = "none";
-    alert("✅ Room booked successfully!");
+    showToast("Room booked successfully!", "success");
     searchRooms(); // refresh results
   });
 }
@@ -421,6 +450,8 @@ if (bookingsTabsContainer) {
     });
   });
 }
+
+
 
 // ============================================
 // Dashboard Page (Day 8 gap-fill)
@@ -648,6 +679,10 @@ if (addRoutineBtn) {
     updateAdminStats();
   });
 }
+
+
+
+
 
 // ============================================
 // Admin Panel - Manage Rooms (Day 8)
