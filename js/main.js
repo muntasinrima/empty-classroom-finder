@@ -67,7 +67,7 @@ async function searchRooms() {
   const selectedTime = document.getElementById("timeSelect").value;
 
   const resultsGrid = document.getElementById("resultsGrid");
-  resultsGrid.innerHTML = "<p>Loading...</p>";
+  resultsGrid.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>Loading rooms...</div>`;
 
   const allRooms = await getAllRooms();
   const allRoutine = await getAllRoutine();
@@ -154,7 +154,7 @@ async function loadRoutineTable() {
   const routineBody = document.getElementById("routineBody");
   if (!routineBody) return; // Only run this on routine.html
 
-  routineBody.innerHTML = "<tr><td colspan='5'>Loading...</td></tr>";
+  routineBody.innerHTML = `<tr><td colspan="5"><div class="loading-wrap"><div class="spinner"></div>Loading routine...</div></td></tr>`;
 
   const allRoutine = await getAllRoutine();
   const selectedRoom = document.getElementById("filterRoom").value;
@@ -365,7 +365,7 @@ async function loadMyBookings(filter = currentBookingsFilter) {
   if (!user) return;
 
   currentBookingsFilter = filter;
-  bookingsList.innerHTML = "<p>Loading...</p>";
+  bookingsList.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>Loading bookings...</div>`;
 
   const bookingsRef = collection(db, "bookings");
   const q = query(bookingsRef, where("booked_by", "==", user.email));
@@ -574,7 +574,7 @@ async function loadAdminRoutine() {
   const tbody = document.getElementById("adminRoutineBody");
   if (!tbody) return;
 
-  tbody.innerHTML = "<tr><td colspan='6'>Loading...</td></tr>";
+  tbody.innerHTML = `<tr><td colspan="6"><div class="loading-wrap"><div class="spinner"></div>Loading...</div></td></tr>`;
 
   const routineRef = collection(db, "routine");
   const snapshot = await getDocs(routineRef);
