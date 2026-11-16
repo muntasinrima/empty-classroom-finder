@@ -846,3 +846,203 @@ populateRoutineRoomDropdown();
 loadAdminRooms();
 loadAdminBookings();
 updateAdminStats();
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// Admin Panel - Bulk Routine Import
+// ============================================
+
+const VALID_DAYS = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+let parsedBulkRows = [];
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// "9:00", "09:00", "2:30 PM" -> "HH:MM" (24-hour)
+function normalizeTime(raw) {
+  const match = raw.trim().match(/^(\d{1,2})[:.](\d{2})\s*(am|pm)?$/i);
+  if (!match) return null;
+
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const meridiem = match[3] ? match[3].toLowerCase() : null;
+
+  if (minutes > 59) return null;
+
+  if (meridiem) {
+    if (hours < 1 || hours > 12) return null;
+    if (meridiem === "pm" && hours !== 12) hours += 12;
+    if (meridiem === "am" && hours === 12) hours = 0;
+  } else if (hours > 23) {
+    return null;
+  }
+
+  return String(hours).padStart(2, "0") + ":" + String(minutes).padStart(2, "0");
+}
+
+// "sat", "SATURDAY" -> "Saturday"
+function normalizeDay(raw) {
+  const cleaned = raw.trim().toLowerCase();
+  return VALID_DAYS.find(
+    (d) => d.toLowerCase() === cleaned || d.toLowerCase().slice(0, 3) === cleaned
+  ) || null;
+}
+
+function parseBulkText(text) {
+  const rows = [];
+  const errors = [];
+  const lines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
+
+  lines.forEach((line, index) => {
+    // Excel/Sheets copy gives tab-separated; comma is the fallback
+    const cells = (line.includes("\t") ? line.split("\t") : line.split(",")).map((c) => c.trim());
+
+    // Skip header row
+    if (index === 0 && cells[1] && cells[1].toLowerCase() === "day") return;
+
+    const lineNo = index + 1;
+
+    if (cells.length < 6) {
+      errors.push(`Line ${lineNo}: 6 ta column dorkar (Room, Day, Start, End, Subject, Teacher)`);
+      return;
+    }
+
+    const room = cells[0].replace(/^room\s*/i, "");
+    const day = normalizeDay(cells[1]);
+    const start = normalizeTime(cells[2]);
+    const end = normalizeTime(cells[3]);
+    const subject = cells[4];
+    const teacher = cells[5];
+
+    const problems = [];
+    if (!room) problems.push("room number nai");
+    if (!day) problems.push(`day thik na ("${cells[1]}")`);
+    if (!start) problems.push(`start time thik na ("${cells[2]}")`);
+    if (!end) problems.push(`end time thik na ("${cells[3]}")`);
+    if (start && end && timeToMinutes(start) >= timeToMinutes(end)) problems.push("end time start-er pore hote hobe");
+    if (!subject) problems.push("subject nai");
+    if (!teacher) problems.push("teacher nai");
+
+    if (problems.length > 0) {
+      errors.push(`Line ${lineNo}: ${problems.join(", ")}`);
+      return;
+    }
+
+    rows.push({
+      room_number: String(room),
+      day: day,
+      start_time: start,
+      end_time: end,
+      subject: subject,
+      teacher: teacher
+    });
+  });
+
+  return { rows, errors };
+}
+
+const bulkPreviewBtn = document.getElementById("bulkPreviewBtn");
+const bulkSaveBtn = document.getElementById("bulkSaveBtn");
+
+if (bulkPreviewBtn && bulkSaveBtn) {
+
+  // Preview
+  bulkPreviewBtn.addEventListener("click", () => {
+    const text = document.getElementById("bulkInput").value;
+    const previewBox = document.getElementById("bulkPreview");
+
+    if (!text.trim()) {
+      showToast("Prothome routine paste koro.", "error");
+      return;
+    }
+
+    const { rows, errors } = parseBulkText(text);
+    parsedBulkRows = rows;
+
+    let html = `<p class="bulk-summary">✅ ${rows.length} ta class ready`;
+    if (errors.length > 0) html += ` &nbsp;•&nbsp; ⚠️ ${errors.length} ta line-e problem`;
+    html += `</p>`;
+
+    if (errors.length > 0) {
+      html += `<div class="bulk-error-list">${errors.map((e) => `<div>${escapeHtml(e)}</div>`).join("")}</div>`;
+    }
+
+    if (rows.length > 0) {
+      html += `
+        <div class="table-wrapper">
+          <table class="routine-table">
+            <thead>
+              <tr><th>Day</th><th>Time</th><th>Room</th><th>Subject</th><th>Teacher</th></tr>
+            </thead>
+            <tbody>
+              ${rows.map((r) => `
+                <tr>
+                  <td><span class="day-pill">${r.day}</span></td>
+                  <td>${r.start_time} - ${r.end_time}</td>
+                  <td><strong>${escapeHtml(r.room_number)}</strong></td>
+                  <td>${escapeHtml(r.subject)}</td>
+                  <td>${escapeHtml(r.teacher)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    previewBox.innerHTML = html;
+    bulkSaveBtn.style.display = rows.length > 0 ? "inline-block" : "none";
+  });
+
+  // Confirm & Save
+  bulkSaveBtn.addEventListener("click", async () => {
+    if (parsedBulkRows.length === 0) return;
+
+    const replaceAll = document.getElementById("bulkReplace").checked;
+
+    if (replaceAll && !confirm("Purono shob routine delete hoye jabe. Continue korbe?")) return;
+
+    bulkSaveBtn.disabled = true;
+    bulkSaveBtn.textContent = "Saving...";
+
+    try {
+      const routineRef = collection(db, "routine");
+
+      if (replaceAll) {
+        const existing = await getDocs(routineRef);
+        await Promise.all(existing.docs.map((d) => deleteDoc(d.ref)));
+      }
+
+      await Promise.all(parsedBulkRows.map((row) => addDoc(routineRef, row)));
+
+      showToast(`${parsedBulkRows.length} ta class routine-e add hoyeche!`, "success");
+
+      // Reset form
+      document.getElementById("bulkInput").value = "";
+      document.getElementById("bulkPreview").innerHTML = "";
+      document.getElementById("bulkReplace").checked = false;
+      bulkSaveBtn.style.display = "none";
+      parsedBulkRows = [];
+
+      loadAdminRoutine();
+    } catch (error) {
+      showToast("Save korte problem hoyeche: " + error.message, "error");
+    } finally {
+      bulkSaveBtn.disabled = false;
+      bulkSaveBtn.textContent = "✅ Confirm & Save";
+    }
+  });
+}
