@@ -858,6 +858,60 @@ updateAdminStats();
 
 
 
+
+// ============================================
+// Auto-load Room Dropdowns from Firestore
+// ============================================
+
+async function populateRoomDropdown(selectId, keepFirstOption) {
+  const select = document.getElementById(selectId);
+  if (!select) return; // ei page-e dropdown na thakle skip
+
+  const rooms = await getAllRooms();
+
+  // Duplicate bad dao, ar number onujayi sajao (101, 102, ... 201)
+  const roomNumbers = [...new Set(rooms.map((r) => String(r.room_number)))]
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+  const previousValue = select.value;
+
+  // Purono option muchhe dao (first "All Rooms" option rakhte chaile seta thakbe)
+  while (select.options.length > (keepFirstOption ? 1 : 0)) {
+    select.remove(select.options.length - 1);
+  }
+
+  roomNumbers.forEach((num) => {
+    const option = document.createElement("option");
+    option.value = num;
+    option.textContent = `Room ${num}`;
+    select.appendChild(option);
+  });
+
+  // Age je room select kora chilo seta thakle abar select kore dao
+  if (previousValue && roomNumbers.includes(previousValue)) {
+    select.value = previousValue;
+  }
+}
+
+populateRoomDropdown("roomSelect", true);      // search.html (All Rooms thakbe)
+populateRoomDropdown("filterRoom", true);      // routine.html (All Rooms thakbe)
+populateRoomDropdown("newRoutineRoom", false); // admin.html (Add Routine form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ============================================
 // Admin Panel - Bulk Routine Import
 // ============================================
@@ -1046,3 +1100,13 @@ if (bulkPreviewBtn && bulkSaveBtn) {
     }
   });
 }
+
+
+
+
+
+
+
+
+
+
